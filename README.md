@@ -36,18 +36,7 @@ eprintln!("{}: 10 files deleted.", "Success".success());
 ```
 
 **Expected output** (may not work in GitHub):<br>
-<span style="font-family: monospace">
-This is <span style="color: #CC0000;">red</span>!<br>
-This is <span style="color: #4E9A06;">green</span>!<br>
-This is <span style="color: #729FCF;">bright blue</span>!<br>
-This is <span style="color: rgb(80, 255, 200);">custom</span>.<br>
-This is a <span style="color: black; background-color: rgb(80, 255, 200);">custom background</span>.<br>
-<span style="font-style: italic; color: #4E9A06;">My custom style</span>.<br>
-<strike><span style="font-style: italic">node.exe</span></strike><br>
-<b><span style="color: #CC0000;">Error</span></b>: please insert a valid input.<br>
-<b><span style="color: #C4A000;">Warning</span></b>: the following files will be deleted.<br>
-<b><span style="color: #4E9A06;">Success</span></b>: 10 files deleted.<br>
-</span>
+![Screenshot](Screenshot.png)
 
 ## Performance
 Use the `style` method to combine multiple styles and print less characters.
