@@ -35,7 +35,7 @@ eprintln!("{}: the following files will be deleted.", "Warning".warning());
 eprintln!("{}: 10 files deleted.", "Success".success());
 ```
 
-**Expected output** (may not work in GitHub):<br>
+**Expected output**:<br>
 ![Screenshot](Screenshot.png)
 
 ## Performance
