@@ -1,0 +1,17 @@
+[package]
+name = "term-lab"
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+authors = ["ValCubeto <valcubetaa@gmail.com>"]
+description = "A crate to easily work with terminal styles and get terminal info."
+repository = "https://github.com/ValCubeto/term-lab.rs"
+homepage = "https://github.com/ValCubeto/term-lab.rs"
+readme = "README.md"
+keywords = ["terminal", "style", "color", "rgb"]
+categories = ["command-line-interface"]
+exclude = ["target", "Cargo.lock", "src/main.rs", ".git"]
+
+[dependencies]
+
+[features]
