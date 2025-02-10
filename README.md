@@ -17,23 +17,34 @@ cargo add term-lab
 use term_lab::styles::{ Stylize, Rgb };
 
 // Use text styles.
-println!("{}", "bold".bold());
-println!("{}", "faint".faint());
-println!("{}", "italics".italics());
-println!("{}", "underline".underlined());
+println!(
+  "{}, {}, {}, {}",
+  "Bold".bold(),
+  "faint".faint(),
+  "italics".italics(),
+  "underline".underlined()
+);
 
 // Use your terminal's color palette.
 println!("This is {}!", "red".red());
 println!("This is {}!", "green".green());
 println!("This is {}!", "bright blue".bright_blue());
-println!("This is {}!", "orange backgound".orange_bg());
+println!("This is {}!", "orange background".orange_bg());
 
 // Use a custom color palette.
-println!("This is {}.", "custom".rgb(Rgb(80, 255, 200)));
-println!("This is a {}.", "custom background".rgb_bg(Rgb(80, 255, 200)));
+println!("This is {}.", "custom".rgb(Rgb(80, 200, 200)));
+println!("This is a {}.", "custom background".rgb_bg(Rgb(80, 200, 200)));
 
 // Use a style builder to print less characters and improve performance.
-println!("{}.", "My custom style".style().green().italics().build()); 
+println!(
+  "{}.",
+  "My composed style"
+    .style()
+    .blue().yellow_bg()
+    .italics()
+    .underlined()
+    .build()
+);
 
 // Some predefined styles.
 eprintln!("Deprecated: {}", "node.exe".deprecated());
@@ -46,9 +57,9 @@ use std::io::{ stdout, stderr, stdin };
 use term_lab::info::TermInfo;
 
 // Get the size of the terminal
-dbg!(stdout().size().ok_or("stdout is not a TTY!"));
-dbg!(stderr().size().ok_or("stderr is not a TTY!"));
-dbg!(stdin().size().ok_or("stdin is not a TTY!"));
+debug!(stdout().size().ok_or("stdout is not a TTY!"));
+debug!(stderr().size().ok_or("stderr is not a TTY!"));
+debug!(stdin().size().ok_or("stdin is not a TTY!"));
 ```
 
 **Expected output**:<br>

@@ -10,7 +10,7 @@ homepage = "https://github.com/ValCubeto/term-lab.rs"
 readme = "README.md"
 keywords = ["terminal", "style", "color", "rgb"]
 categories = ["command-line-interface"]
-exclude = ["target", "Cargo.lock", "src/main.rs", ".git"]
+exclude = ["target", "Cargo.lock", "src/main.rs", ".git", "Makefile"]
 
 [dependencies]
 cfg-if = "1.0.0"
