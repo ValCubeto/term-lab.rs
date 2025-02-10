@@ -36,7 +36,7 @@ println!("This is a {}.", "custom background".rgb_bg(Rgb(80, 255, 200)));
 println!("{}.", "My custom style".style().green().italics().build()); 
 
 // Some predefined styles.
-eprintln!("{}", "node.exe".deprecated());
+eprintln!("Deprecated: {}", "node.exe".deprecated());
 eprintln!("{}: please insert a valid input.", "Error".error());
 eprintln!("{}: the following files will be deleted.", "Warning".warning());
 eprintln!("{}: 10 files deleted.", "Success".success());
