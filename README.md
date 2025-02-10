@@ -16,10 +16,17 @@ cargo add term-lab
 ```rust
 use term_lab::styles::{ Stylize, Rgb };
 
+// Use text styles.
+println!("{}", "bold".bold());
+println!("{}", "faint".faint());
+println!("{}", "italics".italics());
+println!("{}", "underline".underlined());
+
 // Use your terminal's color palette.
 println!("This is {}!", "red".red());
 println!("This is {}!", "green".green());
 println!("This is {}!", "bright blue".bright_blue());
+println!("This is {}!", "orange backgound".orange_bg());
 
 // Use a custom color palette.
 println!("This is {}.", "custom".rgb(Rgb(80, 255, 200)));
@@ -33,6 +40,15 @@ eprintln!("{}", "node.exe".deprecated());
 eprintln!("{}: please insert a valid input.", "Error".error());
 eprintln!("{}: the following files will be deleted.", "Warning".warning());
 eprintln!("{}: 10 files deleted.", "Success".success());
+
+
+use std::io::{ stdout, stderr, stdin };
+use term_lab::info::TermInfo;
+
+// Get the size of the terminal
+dbg!(stdout().size().ok_or("stdout is not a TTY!"));
+dbg!(stderr().size().ok_or("stderr is not a TTY!"));
+dbg!(stdin().size().ok_or("stdin is not a TTY!"));
 ```
 
 **Expected output**:<br>

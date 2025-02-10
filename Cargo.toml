@@ -3,7 +3,7 @@ name = "term-lab"
 version = "1.0.0"
 edition = "2021"
 license = "MIT"
-authors = ["ValCubeto <valcubetaa@gmail.com>"]
+authors = ["Val Cubeto <valcubetaa@gmail.com>"]
 description = "A crate to easily work with terminal styles and get terminal info."
 repository = "https://github.com/ValCubeto/term-lab.rs"
 homepage = "https://github.com/ValCubeto/term-lab.rs"
@@ -16,8 +16,6 @@ exclude = ["target", "Cargo.lock", "src/main.rs", ".git"]
 cfg-if = "1.0.0"
 cps = "0.2.3"
 rustix = { version = "0.38.44", features = ["termios"] }
-nix = { version = "0.26.1", features = ["term"] }
 windows-sys = { version = "0.45.0", features = ["Win32", "Win32_Foundation", "Win32_System", "Win32_System_Console"] }
-termion = "4.0.3"
 
 [features]
