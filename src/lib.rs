@@ -1,11 +1,15 @@
 #![doc = include_str!("../README.md")]
 
 pub mod styles;
+pub mod info;
 
 #[doc(hidden)]
 #[macro_export]
 macro_rules! def_strings {
-  ($( $name:ident = $value:expr; )*) => {
-    $( pub const $name: &str = $value; )*
+  ($( $( #[$doc:meta] )? $name:ident = $value:expr; )*) => {
+    $(
+      $( #[$doc] )?
+      pub const $name: &str = $value;
+    )*
   };
 }

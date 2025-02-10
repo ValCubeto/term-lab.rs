@@ -1,0 +1,97 @@
+#[doc = "Makes the text bold."]
+fn bold() -> (BOLD, BOLD_OFF);
+fn faint() -> (FAINT, FAINT_OFF);
+#[doc = "Makes the text cursive."]
+fn italics() -> (ITALICS, ITALICS_OFF);
+#[doc = "Adds a line under the text."]
+fn underlined() -> (UNDERLINE, UNDERLINE_OFF);
+fn double_underlined() -> (DOUBLE_UNDERLINE, UNDERLINE_OFF);
+fn slow_blink() -> (SLOW_BLINK, BLINK_OFF);
+fn fast_blink() -> (FAST_BLINK, BLINK_OFF);
+fn inverted() -> (INVERSE, INVERSE_OFF);
+#[doc = "Make the text invisible"]
+fn invisible() -> (INVISIBLE, INVISIBLE_OFF);
+#[doc = "Adds a line through the text."]
+fn striked() -> (STRIKETHROUGH, STRIKETHROUGH_OFF);
+fn overlined() -> (OVERLINE, OVERLINE_OFF);
+
+#[doc = "Makes the text black."]
+fn black() -> (BLACK, FOREGROUND_OFF);
+#[doc = "Makes the text red."]
+fn red() -> (RED, FOREGROUND_OFF);
+#[doc = "Makes the text green."]
+fn green() -> (GREEN, FOREGROUND_OFF);
+#[doc = "Makes the text yellow."]
+fn yellow() -> (YELLOW, FOREGROUND_OFF);
+#[doc = "Makes the text blue."]
+fn blue() -> (BLUE, FOREGROUND_OFF);
+#[doc = "Makes the text magenta."]
+fn magenta() -> (MAGENTA, FOREGROUND_OFF);
+#[doc = "Makes the text cyan."]
+fn cyan() -> (CYAN, FOREGROUND_OFF);
+#[doc = "Makes the text white."]
+fn white() -> (WHITE, FOREGROUND_OFF);
+
+#[doc = "Makes the text bright black."]
+fn bright_black() -> (BRIGHT_BLACK, FOREGROUND_OFF);
+#[doc = "Makes the text bright red."]
+fn bright_red() -> (BRIGHT_RED, FOREGROUND_OFF);
+#[doc = "Makes the text bright green."]
+fn bright_green() -> (BRIGHT_GREEN, FOREGROUND_OFF);
+#[doc = "Makes the text bright yellow."]
+fn bright_yellow() -> (BRIGHT_YELLOW, FOREGROUND_OFF);
+#[doc = "Makes the text bright blue."]
+fn bright_blue() -> (BRIGHT_BLUE, FOREGROUND_OFF);
+#[doc = "Makes the text bright magenta."]
+fn bright_magenta() -> (BRIGHT_MAGENTA, FOREGROUND_OFF);
+#[doc = "Makes the text bright cyan."]
+fn bright_cyan() -> (BRIGHT_CYAN, FOREGROUND_OFF);
+#[doc = "Makes the text bright white."]
+fn bright_white() -> (BRIGHT_WHITE, FOREGROUND_OFF);
+
+#[doc = "Makes the background black."]
+fn black_bg() -> (BLACK_BG, END_BG);
+#[doc = "Makes the background red."]
+fn red_bg() -> (RED_BG, END_BG);
+#[doc = "Makes the background green."]
+fn green_bg() -> (GREEN_BG, END_BG);
+#[doc = "Makes the background yellow."]
+fn yellow_bg() -> (YELLOW_BG, END_BG);
+#[doc = "Makes the background blue."]
+fn blue_bg() -> (BLUE_BG, END_BG);
+#[doc = "Makes the background magenta."]
+fn magenta_bg() -> (MAGENTA_BG, END_BG);
+#[doc = "Makes the background cyan."]
+fn cyan_bg() -> (CYAN_BG, END_BG);
+#[doc = "Makes the background white."]
+fn white_bg() -> (WHITE_BG, END_BG);
+
+#[doc = "Makes the background bright black."]
+fn bright_black_bg() -> (BRIGHT_BLACK_BG, END_BG);
+#[doc = "Makes the background bright red."]
+fn bright_red_bg() -> (BRIGHT_RED_BG, END_BG);
+#[doc = "Makes the background bright green."]
+fn bright_green_bg() -> (BRIGHT_GREEN_BG, END_BG);
+#[doc = "Makes the background bright yellow."]
+fn bright_yellow_bg() -> (BRIGHT_YELLOW_BG, END_BG);
+#[doc = "Makes the background bright blue."]
+fn bright_blue_bg() -> (BRIGHT_BLUE_BG, END_BG);
+#[doc = "Makes the background bright magenta."]
+fn bright_magenta_bg() -> (BRIGHT_MAGENTA_BG, END_BG);
+#[doc = "Makes the background bright cyan."]
+fn bright_cyan_bg() -> (BRIGHT_CYAN_BG, END_BG);
+#[doc = "Makes the background bright white."]
+fn bright_white_bg() -> (BRIGHT_WHITE_BG, END_BG);
+
+#[doc = "Makes the text orange."]
+fn orange() -> (ORANGE, FOREGROUND_OFF);
+#[doc = "Makes the background orange."]
+fn orange_bg() -> (ORANGE_BG, END_BG);
+#[doc = "Makes the text blueberry."]
+fn blueberry() -> (BLUEBERRY, FOREGROUND_OFF);
+#[doc = "Makes the background blueberry."]
+fn blueberry_bg() -> (BLUEBERRY_BG, END_BG);
+#[doc = "Makes the text pink."]
+fn pink() -> (PINK, FOREGROUND_OFF);
+#[doc = "Makes the background pink."]
+fn pink_bg() -> (PINK_BG, END_BG);

@@ -5,16 +5,47 @@
 use std::fmt;
 use crate::def_strings;
 
+#[cps::cps]
+/// Pass a file to a macro.
+/// As this 
+macro_rules! pass_file {
+  ($macro:ident!($source:expr)) => 
+    let $($file:tt)* = cps::include!($source) in
+  {
+    $macro! { $($file)* }
+  };
+}
+
 def_strings! {
+  #[doc = "Reset all styles"]
   RESET = "0";
+  #[doc = "Increase the font weight"]
   BOLD = "1";
-  ITALIC = "3";
+  #[doc = "Decrease the font weight"]
+  BOLD_OFF = "22";
+  #[doc = "Decrease the intensity"]
+  FAINT = "2";
+  #[doc = "Reset the intensity"]
+  FAINT_OFF = "22";
+  ITALICS = "3";
+  ITALICS_OFF = "23";
   UNDERLINE = "4";
+  DOUBLE_UNDERLINE = "21";
+  UNDERLINE_OFF = "24";
+  #[doc = "Make the text blink"]
+  SLOW_BLINK = "5";
+  #[doc = "Make the text blink"]
+  FAST_BLINK = "6";
+  #[doc = "Reset the blink"]
+  BLINK_OFF = "25";
+  INVERSE = "7";
+  INVERSE_OFF = "27";
+  INVISIBLE = "8";
+  INVISIBLE_OFF = "28";
   STRIKETHROUGH = "9";
-  BOLD_END = "22";
-  ITALIC_END = "23";
-  UNDERLINE_END = "24";
-  STRIKETHROUGH_END = "29";
+  STRIKETHROUGH_OFF = "29";
+  OVERLINE = "53";
+  OVERLINE_OFF = "55";
 
   BLACK = "30";
   RED = "31";
@@ -32,7 +63,7 @@ def_strings! {
   BRIGHT_MAGENTA = "95";
   BRIGHT_CYAN = "96";
   BRIGHT_WHITE = "97";
-  FOREGROUND_END = "39";
+  FOREGROUND_OFF = "39";
 
   BLACK_BG = "40";
   RED_BG = "41";
@@ -60,11 +91,17 @@ def_strings! {
   PINK_BG = "48;2;255;0;200";
 }
 
+#[inline(always)]
+/// Resets the text to its default style.
+pub fn reset() -> String {
+  format!("\x1b[{}m", RESET)
+}
+
 #[derive(Debug, Clone, Copy)]
 pub struct Rgb(pub u8, pub u8, pub u8);
 
 macro_rules! style_fn {
-  ($($(#[$tag:meta])? fn $fn_name:ident(): $start:ident, $end:ident;)*) => {
+  ($($(#[$tag:meta])? fn $fn_name:ident() -> ($start:ident, $end:ident);)*) => {
     $(
       $(#[$tag])?
       #[inline(always)]
@@ -78,103 +115,7 @@ macro_rules! style_fn {
 
 /// A trait that provides styling for terminals that support ANSI escape codes.
 pub trait Stylize: fmt::Display {
-  #[inline(always)]
-  /// Resets the text to its default style.
-  fn reset() -> String {
-    format!("\x1b[{}m", RESET)
-  }
-
-  style_fn! {
-    #[doc = "Makes the text bold."]
-    fn bold(): BOLD, BOLD_END;
-    #[doc = "Makes the text cursive."]
-    fn italics(): ITALIC, ITALIC_END;
-    #[doc = "Adds a line under the text."]
-    fn underline(): UNDERLINE, UNDERLINE_END;
-    #[doc = "Adds a line through the text."]
-    fn strikethrough(): STRIKETHROUGH, STRIKETHROUGH_END;
-
-    #[doc = "Makes the text black."]
-    fn black(): BLACK, FOREGROUND_END;
-    #[doc = "Makes the text red."]
-    fn red(): RED, FOREGROUND_END;
-    #[doc = "Makes the text green."]
-    fn green(): GREEN, FOREGROUND_END;
-    #[doc = "Makes the text yellow."]
-    fn yellow(): YELLOW, FOREGROUND_END;
-    #[doc = "Makes the text blue."]
-    fn blue(): BLUE, FOREGROUND_END;
-    #[doc = "Makes the text magenta."]
-    fn magenta(): MAGENTA, FOREGROUND_END;
-    #[doc = "Makes the text cyan."]
-    fn cyan(): CYAN, FOREGROUND_END;
-    #[doc = "Makes the text white."]
-    fn white(): WHITE, FOREGROUND_END;
-
-    #[doc = "Makes the text bright black."]
-    fn bright_black(): BRIGHT_BLACK, FOREGROUND_END;
-    #[doc = "Makes the text bright red."]
-    fn bright_red(): BRIGHT_RED, FOREGROUND_END;
-    #[doc = "Makes the text bright green."]
-    fn bright_green(): BRIGHT_GREEN, FOREGROUND_END;
-    #[doc = "Makes the text bright yellow."]
-    fn bright_yellow(): BRIGHT_YELLOW, FOREGROUND_END;
-    #[doc = "Makes the text bright blue."]
-    fn bright_blue(): BRIGHT_BLUE, FOREGROUND_END;
-    #[doc = "Makes the text bright magenta."]
-    fn bright_magenta(): BRIGHT_MAGENTA, FOREGROUND_END;
-    #[doc = "Makes the text bright cyan."]
-    fn bright_cyan(): BRIGHT_CYAN, FOREGROUND_END;
-    #[doc = "Makes the text bright white."]
-    fn bright_white(): BRIGHT_WHITE, FOREGROUND_END;
-
-    #[doc = "Makes the background black."]
-    fn black_bg(): BLACK_BG, END_BG;
-    #[doc = "Makes the background red."]
-    fn red_bg(): RED_BG, END_BG;
-    #[doc = "Makes the background green."]
-    fn green_bg(): GREEN_BG, END_BG;
-    #[doc = "Makes the background yellow."]
-    fn yellow_bg(): YELLOW_BG, END_BG;
-    #[doc = "Makes the background blue."]
-    fn blue_bg(): BLUE_BG, END_BG;
-    #[doc = "Makes the background magenta."]
-    fn magenta_bg(): MAGENTA_BG, END_BG;
-    #[doc = "Makes the background cyan."]
-    fn cyan_bg(): CYAN_BG, END_BG;
-    #[doc = "Makes the background white."]
-    fn white_bg(): WHITE_BG, END_BG;
-
-    #[doc = "Makes the background bright black."]
-    fn bright_black_bg(): BRIGHT_BLACK_BG, END_BG;
-    #[doc = "Makes the background bright red."]
-    fn bright_red_bg(): BRIGHT_RED_BG, END_BG;
-    #[doc = "Makes the background bright green."]
-    fn bright_green_bg(): BRIGHT_GREEN_BG, END_BG;
-    #[doc = "Makes the background bright yellow."]
-    fn bright_yellow_bg(): BRIGHT_YELLOW_BG, END_BG;
-    #[doc = "Makes the background bright blue."]
-    fn bright_blue_bg(): BRIGHT_BLUE_BG, END_BG;
-    #[doc = "Makes the background bright magenta."]
-    fn bright_magenta_bg(): BRIGHT_MAGENTA_BG, END_BG;
-    #[doc = "Makes the background bright cyan."]
-    fn bright_cyan_bg(): BRIGHT_CYAN_BG, END_BG;
-    #[doc = "Makes the background bright white."]
-    fn bright_white_bg(): BRIGHT_WHITE_BG, END_BG;
-    
-    #[doc = "Makes the text orange."]
-    fn orange(): ORANGE, FOREGROUND_END;
-    #[doc = "Makes the background orange."]
-    fn orange_bg(): ORANGE_BG, END_BG;
-    #[doc = "Makes the text blueberry."]
-    fn blueberry(): BLUEBERRY, FOREGROUND_END;
-    #[doc = "Makes the background blueberry."]
-    fn blueberry_bg(): BLUEBERRY_BG, END_BG;
-    #[doc = "Makes the text pink."]
-    fn pink(): PINK, FOREGROUND_END;
-    #[doc = "Makes the background pink."]
-    fn pink_bg(): PINK_BG, END_BG;
-  }
+  pass_file!(style_fn!("src/styles.in"));
 
   #[inline(always)]
   /// Applies a foreground color to the string.
@@ -183,7 +124,7 @@ pub trait Stylize: fmt::Display {
       "\x1b[38;2;{};{};{}m{}\x1b[{}m",
       red, green, blue,
       self,
-      FOREGROUND_END
+      FOREGROUND_OFF
     )
   }
   #[inline(always)]
@@ -237,7 +178,7 @@ pub struct StyleBuilder {
 }
 
 macro_rules! lazy_style_fn {
-  ($($(#[$tag:meta])? fn $fn_name:ident(): $start:ident, $end:ident;)*) => {
+  ($($(#[$tag:meta])? fn $fn_name:ident() -> ($start:ident, $end:ident);)*) => {
     $(
       $(#[$tag])?
       #[inline(always)]
@@ -265,101 +206,11 @@ impl StyleBuilder {
   pub fn build(self) -> String {
     format!("\x1b[{}m{}\x1b[{}m", self.start.join(";"), self.text, self.end.join(";"))
   }
-  lazy_style_fn! {
-    #[doc = "Makes the text bold."]
-    fn bold(): BOLD, BOLD_END;
-    #[doc = "Makes the text cursive."]
-    fn italics(): ITALIC, ITALIC_END;
-    #[doc = "Adds a line under the text."]
-    fn underline(): UNDERLINE, UNDERLINE_END;
-    #[doc = "Adds a line through the text."]
-    fn strikethrough(): STRIKETHROUGH, STRIKETHROUGH_END;
-
-    #[doc = "Makes the text black."]
-    fn black(): BLACK, FOREGROUND_END;
-    #[doc = "Makes the text red."]
-    fn red(): RED, FOREGROUND_END;
-    #[doc = "Makes the text green."]
-    fn green(): GREEN, FOREGROUND_END;
-    #[doc = "Makes the text yellow."]
-    fn yellow(): YELLOW, FOREGROUND_END;
-    #[doc = "Makes the text blue."]
-    fn blue(): BLUE, FOREGROUND_END;
-    #[doc = "Makes the text magenta."]
-    fn magenta(): MAGENTA, FOREGROUND_END;
-    #[doc = "Makes the text cyan."]
-    fn cyan(): CYAN, FOREGROUND_END;
-    #[doc = "Makes the text white."]
-    fn white(): WHITE, FOREGROUND_END;
-
-    #[doc = "Makes the text bright black."]
-    fn bright_black(): BRIGHT_BLACK, FOREGROUND_END;
-    #[doc = "Makes the text bright red."]
-    fn bright_red(): BRIGHT_RED, FOREGROUND_END;
-    #[doc = "Makes the text bright green."]
-    fn bright_green(): BRIGHT_GREEN, FOREGROUND_END;
-    #[doc = "Makes the text bright yellow."]
-    fn bright_yellow(): BRIGHT_YELLOW, FOREGROUND_END;
-    #[doc = "Makes the text bright blue."]
-    fn bright_blue(): BRIGHT_BLUE, FOREGROUND_END;
-    #[doc = "Makes the text bright magenta."]
-    fn bright_magenta(): BRIGHT_MAGENTA, FOREGROUND_END;
-    #[doc = "Makes the text bright cyan."]
-    fn bright_cyan(): BRIGHT_CYAN, FOREGROUND_END;
-    #[doc = "Makes the text bright white."]
-    fn bright_white(): BRIGHT_WHITE, FOREGROUND_END;
-
-    #[doc = "Makes the background black."]
-    fn black_bg(): BLACK_BG, END_BG;
-    #[doc = "Makes the background red."]
-    fn red_bg(): RED_BG, END_BG;
-    #[doc = "Makes the background green."]
-    fn green_bg(): GREEN_BG, END_BG;
-    #[doc = "Makes the background yellow."]
-    fn yellow_bg(): YELLOW_BG, END_BG;
-    #[doc = "Makes the background blue."]
-    fn blue_bg(): BLUE_BG, END_BG;
-    #[doc = "Makes the background magenta."]
-    fn magenta_bg(): MAGENTA_BG, END_BG;
-    #[doc = "Makes the background cyan."]
-    fn cyan_bg(): CYAN_BG, END_BG;
-    #[doc = "Makes the background white."]
-    fn white_bg(): WHITE_BG, END_BG;
-
-    #[doc = "Makes the background bright black."]
-    fn bright_black_bg(): BRIGHT_BLACK_BG, END_BG;
-    #[doc = "Makes the background bright red."]
-    fn bright_red_bg(): BRIGHT_RED_BG, END_BG;
-    #[doc = "Makes the background bright green."]
-    fn bright_green_bg(): BRIGHT_GREEN_BG, END_BG;
-    #[doc = "Makes the background bright yellow."]
-    fn bright_yellow_bg(): BRIGHT_YELLOW_BG, END_BG;
-    #[doc = "Makes the background bright blue."]
-    fn bright_blue_bg(): BRIGHT_BLUE_BG, END_BG;
-    #[doc = "Makes the background bright magenta."]
-    fn bright_magenta_bg(): BRIGHT_MAGENTA_BG, END_BG;
-    #[doc = "Makes the background bright cyan."]
-    fn bright_cyan_bg(): BRIGHT_CYAN_BG, END_BG;
-    #[doc = "Makes the background bright white."]
-    fn bright_white_bg(): BRIGHT_WHITE_BG, END_BG;
-
-    #[doc = "Makes the text orange."]
-    fn orange(): ORANGE, FOREGROUND_END;
-    #[doc = "Makes the background orange."]
-    fn orange_bg(): ORANGE_BG, END_BG;
-    #[doc = "Makes the text blueberry."]
-    fn blueberry(): BLUEBERRY, FOREGROUND_END;
-    #[doc = "Makes the background blueberry."]
-    fn blueberry_bg(): BLUEBERRY_BG, END_BG;
-    #[doc = "Makes the text pink."]
-    fn pink(): PINK, FOREGROUND_END;
-    #[doc = "Makes the background pink."]
-    fn pink_bg(): PINK_BG, END_BG;
-  }
+  pass_file!(lazy_style_fn!("src/styles.in"));
 
   pub fn rgb(mut self, Rgb(red, green, blue): Rgb) -> Self {
     self.start.push(format!("38;2;{};{};{}", red, green, blue).into_boxed_str());
-    self.end.push(FOREGROUND_END.into());
+    self.end.push(FOREGROUND_OFF.into());
     self
   }
   pub fn rgb_bg(mut self, Rgb(red, green, blue): Rgb) -> Self {

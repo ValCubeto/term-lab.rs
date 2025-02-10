@@ -1,80 +1,130 @@
+use std::io::{ stdout, stderr, stdin };
+use term_lab::info::TermInfo;
 use term_lab::styles::{ Stylize, Rgb };
+
+macro_rules! debug {
+  ($e:expr) => {
+    println!("{} = {:?}", stringify!($e), $e);
+  };
+}
 
 // I'm using main because tests deactivate stdout
 fn main() {
-  println!("{}", "Bold".bold());
-  println!("{}", "Italics".italics());
-  println!("{}", "Underline".underline());
-  println!("{}", "Strikethrough".strikethrough());
-  println!();
-
-  println!("{}", "Black".black());
-  println!("{}", "Red".red());
-  println!("{}", "Green".green());
-  println!("{}", "Yellow".yellow());
-  println!("{}", "Blue".blue());
-  println!("{}", "Magenta".magenta());
-  println!("{}", "Cyan".cyan());
-  println!("{}", "White".white());
-  println!("{}", "Bright Black".bright_black());
-  println!("{}", "Bright Red".bright_red());
-  println!("{}", "Bright Green".bright_green());
-  println!("{}", "Bright Yellow".bright_yellow());
-  println!("{}", "Bright Blue".bright_blue());
-  println!("{}", "Bright Magenta".bright_magenta());
-  println!("{}", "Bright Cyan".bright_cyan());
-  println!("{}", "Bright White".bright_white());
-  println!("{}", "Orange".orange());
-  println!("{}", "Blueberry".blueberry());
-  println!("{}", "Pink".pink());
-  println!();
-
-  println!("{}", "Black background".black_bg());
-  println!("{}", "Red background".red_bg());
-  println!("{}", "Green background".green_bg());
-  println!("{}", "Yellow background".yellow_bg());
-  println!("{}", "Blue background".blue_bg());
-  println!("{}", "Magenta background".magenta_bg());
-  println!("{}", "Cyan background".cyan_bg());
-  println!("{}", "White background".white_bg());
-  println!("{}", "Bright black background".bright_black_bg());
-  println!("{}", "Bright red background".bright_red_bg());
-  println!("{}", "Bright green background".bright_green_bg());
-  println!("{}", "Bright yellow background".bright_yellow_bg());
-  println!("{}", "Bright blue background".bright_blue_bg());
-  println!("{}", "Bright magenta background".bright_magenta_bg());
-  println!("{}", "Bright cyan background".bright_cyan_bg());
-  println!("{}", "Bright white background".bright_white_bg());
-  println!("{}", "Orange background".orange_bg());
-  println!("{}", "Blueberry background".blueberry_bg());
-  println!("{}", "Pink background".pink_bg());
-  println!();
-
-  let rgb = Rgb(110, 255, 175);
-  println!("{}", "RGB".rgb(rgb));
-  println!("{}", "RGB Background".rgb_bg(rgb));
-  println!();
-
-  println!("{}", "Deprecated".deprecated());
-  println!("{}", "Error".error());
-  println!("{}", "Warning".warning());
-  println!("{}", "Success".success());
-  println!();
-
-  let text = "Bold + italics".style()
-    .bold()
-    .italics()
-    .build();
-  println!("{} ({:?})", text, text);
-  let text = "test"
-    // .style()
-    .rgb(Rgb(0xff, 0x50, 0x50))
-    .rgb_bg(Rgb(0x50, 0x50, 0xff)) 
-    .bold()
-    .italics()
-    .underline()
-    .strikethrough()
-    // .build()
-    ;
-  println!("{} ({:?})", text, text);
+  debug!(stdout().size());
+  debug!(stderr().size());
+  debug!(stdin().size());
+  debug!(stdout().is_ansi_enabled());
+  debug!(stderr().is_ansi_enabled());
+  debug!(stdin().is_ansi_enabled());
+  // println!(
+  //   "{}, {}, {}",
+  //   "Bold".bold(),
+  //   "faint".faint(),
+  //   "italics".italics(),
+  // );
+  // println!(
+  //   "{}, {}",
+  //   "Slow blink".slow_blink(),
+  //   "fast blink".fast_blink()
+  // );
+  // println!(
+  //   "{}, ({})",
+  //   "Inverted".inverted(),
+  //   "invisible".invisible()
+  // );
+  // println!(
+  //   "{}, {}, {}, {}",
+  //   "Underline".underlined(),
+  //   "double underline".double_underlined(),
+  //   "overline".overlined(),
+  //   "striked".striked()
+  // );
+  // println!(
+  //   "{}, {}, {}, {}, {}, {}, {}, {}",
+  //   "Black".black(),
+  //   "red".red(),
+  //   "green".green(),
+  //   "yellow".yellow(),
+  //   "blue".blue(),
+  //   "magenta".magenta(),
+  //   "cyan".cyan(),
+  //   "white".white()
+  // );
+  // println!(
+  //   "{}, {}, {}, {}, {}, {}, {}, {}",
+  //   "Black".bright_black(),
+  //   "red".bright_red(),
+  //   "green".bright_green(),
+  //   "yellow".bright_yellow(),
+  //   "blue".bright_blue(),
+  //   "magenta".bright_magenta(),
+  //   "cyan".bright_cyan(),
+  //   "white".bright_white()
+  // );
+  // println!(
+  //   "{}, {}, {}, {}, {}, {}, {}, {}",
+  //   "Black".black_bg(),
+  //   "red".red_bg(),
+  //   "green".green_bg(),
+  //   "yellow".yellow_bg(),
+  //   "blue".blue_bg(),
+  //   "magenta".magenta_bg(),
+  //   "cyan".cyan_bg(),
+  //   "white".white_bg()
+  // );
+  // println!(
+  //   "{}, {}, {}, {}, {}, {}, {}, {}",
+  //   "Black".bright_black_bg(),
+  //   "red".bright_red_bg(),
+  //   "green".bright_green_bg(),
+  //   "yellow".bright_yellow_bg(),
+  //   "blue".bright_blue_bg(),
+  //   "magenta".bright_magenta_bg(),
+  //   "cyan".bright_cyan_bg(),
+  //   "white".bright_white_bg()
+  // );
+  // println!(
+  //   "{}, {}, {}",
+  //   "Orange".orange(),
+  //   "blueberry".blueberry(),
+  //   "pink".pink()
+  // );
+  // println!(
+  //   "{}, {}, {}",
+  //   "Orange".orange_bg(),
+  //   "blueberry".blueberry_bg(),
+  //   "pink".pink_bg()
+  // );
+  // println!(
+  //   "{}, {}, {}, {}",
+  //   "Deprecated".deprecated(),
+  //   "error".error(),
+  //   "warning".warning(),
+  //   "success".success()
+  // );
+  // let rgb = Rgb(110, 255, 175);
+  // println!(
+  //   "{}, {}",
+  //   "RGB foreground".rgb(rgb),
+  //   "RGB background".rgb_bg(rgb)
+  // );
+  // let text = "Bold + italics".style()
+  //   .bold()
+  //   .italics()
+  //   .build();
+  // println!("{} ({:?})", text, text);
+  // let text = "A bunch of styles"
+  //   .style()
+  //   .rgb(Rgb(0xff, 0xff, 0x50))
+  //   .rgb_bg(Rgb(0x50, 0x50, 0xff)) 
+  //   .bold()
+  //   .faint()
+  //   .italics()
+  //   .double_underlined()
+  //   .overlined()
+  //   .striked()
+  //   .slow_blink()
+  //   .inverted()
+  //   .build();
+  // println!("{} ({:?})", text, text);
 }
